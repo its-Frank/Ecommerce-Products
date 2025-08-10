@@ -1,0 +1,223 @@
+<div class="bg-gradient-to-r from-primary to-secondary py-16">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <h1 class="text-5xl font-bold text-white mb-4">Contact Us</h1>
+    <p class="text-xl text-gray-200">
+      Get in touch with our team for any inquiries or bookings
+    </p>
+  </div>
+</div>
+
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Contact Form -->
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-primary mb-6">Send us a Message</h2>
+        <% if (typeof success !== 'undefined' && success) { %>
+        <div
+          class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6"
+        >
+          <%= success %>
+        </div>
+        <% } %> <% if (typeof error !== 'undefined' && error) { %>
+        <div
+          class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6"
+        >
+          <%= error %>
+        </div>
+        <% } %>
+        <form action="/contact" method="POST" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >First Name</label
+              >
+              <input
+                type="text"
+                name="first_name"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Last Name</label
+              >
+              <input
+                type="text"
+                name="last_name"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+              />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Email Address</label
+            >
+            <input
+              type="email"
+              name="email"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Phone Number</label
+            >
+            <input
+              type="tel"
+              name="phone"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Subject</label
+            >
+            <select
+              name="subject"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+            >
+              <option>General Inquiry</option>
+              <option>Booking Question</option>
+              <option>Product Information</option>
+              <option>Collaboration</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Message</label
+            >
+            <textarea
+              name="message"
+              rows="5"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+              placeholder="Tell us how we can help you..."
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-accent text-primary px-6 py-4 rounded-lg font-semibold hover:bg-opacity-80 transition text-lg"
+          >
+            Send Message
+          </button>
+        </form>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="space-y-8">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <h2 class="text-3xl font-bold text-primary mb-6">Get in Touch</h2>
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div
+                class="bg-accent w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+              >
+                <i class="fas fa-map-marker-alt text-primary text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-primary mb-1">
+                  Visit Our Studio
+                </h3>
+                <p class="text-gray-600">
+                  123 Beauty Lane<br />Westlands, Nairobi<br />Kenya
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div
+                class="bg-secondary w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+              >
+                <i class="fas fa-phone text-white text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-primary mb-1">Call Us</h3>
+                <p class="text-gray-600">0707539915<br />+254 707 539 915</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div
+                class="bg-primary w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+              >
+                <i class="fas fa-envelope text-accent text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-primary mb-1">Email Us</h3>
+                <p class="text-gray-600">
+                  laogadess@gmail.com<br />bookings@lavendersgloss.com
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div
+                class="bg-accent w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+              >
+                <i class="fas fa-clock text-primary text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-primary mb-1">Business Hours</h3>
+                <p class="text-gray-600">
+                  Monday - Friday: 9:00 AM - 7:00 PM<br />Saturday: 9:00 AM -
+                  5:00 PM<br />Sunday: By Appointment
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <h3 class="text-xl font-semibold text-primary mb-4">Follow Us</h3>
+          <div class="flex space-x-4">
+            <a
+              href="#"
+              class="bg-accent w-12 h-12 rounded-full flex items-center justify-center hover:bg-opacity-80 transition"
+            >
+              <i class="fab fa-facebook-f text-primary text-xl"></i>
+            </a>
+            <a
+              href="#"
+              class="bg-secondary w-12 h-12 rounded-full flex items-center justify-center hover:bg-opacity-80 transition"
+            >
+              <i class="fab fa-instagram text-white text-xl"></i>
+            </a>
+            <a
+              href="#"
+              class="bg-primary w-12 h-12 rounded-full flex items-center justify-center hover:bg-opacity-80 transition"
+            >
+              <i class="fab fa-twitter text-accent text-xl"></i>
+            </a>
+            <a
+              href="#"
+              class="bg-accent w-12 h-12 rounded-full flex items-center justify-center hover:bg-opacity-80 transition"
+            >
+              <i class="fab fa-tiktok text-primary text-xl"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Map Section -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold text-primary mb-4">Find Us</h2>
+      <p class="text-gray-600">Located in the heart of Westlands, Nairobi</p>
+    </div>
+    <div class="bg-gray-300 h-96 rounded-lg flex items-center justify-center">
+      <div class="text-center">
+        <i class="fas fa-map-marker-alt text-4xl text-gray-500 mb-4"></i>
+        <p class="text-gray-600">Interactive map will be displayed here</p>
+        <p class="text-sm text-gray-500">
+          Replace with actual Google Maps embed
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

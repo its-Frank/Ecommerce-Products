@@ -1,0 +1,239 @@
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-primary to-secondary py-20">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+      Welcome to <span class="text-accent">Lavender's Gloss</span>
+    </h1>
+    <p class="text-xl text-gray-200 mb-8 max-w-3xl mx-auto">
+      Transform your beauty with our professional makeup services and premium
+      products. From bridal elegance to creative artistry, we bring your vision
+      to life.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a
+        href="/services"
+        class="bg-accent text-primary px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition text-lg"
+        style="position: relative; z-index: 10; pointer-events: auto"
+      >
+        Book Appointment
+      </a>
+      <a
+        href="/shop"
+        class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition text-lg"
+        style="position: relative; z-index: 10; pointer-events: auto"
+      >
+        Shop Products
+      </a>
+    </div>
+  </div>
+  <div class="absolute inset-0 bg-black opacity-20"></div>
+</section>
+
+<!-- Services Preview -->
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-primary mb-4">Our Services</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+        Professional makeup services tailored to your unique style and occasion
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <a
+        href="/services/bridal-makeup"
+        class="bg-gradient-to-br from-accent to-secondary p-6 rounded-lg text-center hover:transform hover:scale-105 transition block"
+      >
+        <div
+          class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+          <i class="fas fa-crown text-primary text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-2">Bridal Makeup</h3>
+        <p class="text-gray-100 mb-4">Perfect for your special day</p>
+        <p class="text-2xl font-bold text-white">KSH 15,000</p>
+      </a>
+      <a
+        href="/services/soft-glam"
+        class="bg-gradient-to-br from-secondary to-primary p-6 rounded-lg text-center hover:transform hover:scale-105 transition block"
+      >
+        <div
+          class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+          <i class="fas fa-sparkles text-primary text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-2">Soft Glam</h3>
+        <p class="text-gray-100 mb-4">Natural and elegant look</p>
+        <p class="text-2xl font-bold text-white">KSH 8,000</p>
+      </a>
+      <a
+        href="/services/creative-makeup"
+        class="bg-gradient-to-br from-primary to-accent p-6 rounded-lg text-center hover:transform hover:scale-105 transition block"
+      >
+        <div
+          class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+          <i class="fas fa-palette text-primary text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-2">Creative Makeup</h3>
+        <p class="text-gray-100 mb-4">Artistic and unique designs</p>
+        <p class="text-2xl font-bold text-white">KSH 12,000</p>
+      </a>
+      <a
+        href="/services/sfx-makeup"
+        class="bg-gradient-to-br from-accent to-primary p-6 rounded-lg text-center hover:transform hover:scale-105 transition block"
+      >
+        <div
+          class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+          <i class="fas fa-magic text-primary text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-2">SFX Makeup</h3>
+        <p class="text-gray-100 mb-4">Special effects transformations</p>
+        <p class="text-2xl font-bold text-white">KSH 20,000</p>
+      </a>
+    </div>
+    <div class="text-center mt-12">
+      <a
+        href="/services"
+        class="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition text-lg"
+      >
+        View All Services
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-primary mb-4">Featured Products</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+        Premium makeup products to enhance your natural beauty
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% products.forEach(product => { %>
+      <div
+        class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition"
+      >
+        <img
+          src="<%= product.image %>"
+          alt="<%= product.name %>"
+          class="w-full h-48 object-cover"
+        />
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-primary mb-2">
+            <%= product.name %>
+          </h3>
+          <p class="text-gray-600 mb-4"><%= product.description %></p>
+          <div class="flex justify-between items-center">
+            <span class="text-2xl font-bold text-secondary"
+              >KSH <%= product.price_ksh.toLocaleString() %></span
+            >
+            <span class="text-sm text-gray-500"
+              ><%= product.stock %> in stock</span
+            >
+          </div>
+          <% if (user) { %>
+          <button
+            onclick="addToCart(<%= product.id %>)"
+            class="w-full mt-4 bg-accent text-primary px-4 py-2 rounded hover:bg-opacity-80 transition font-semibold"
+          >
+            Add to Cart
+          </button>
+          <% } else { %>
+          <a
+            href="/login"
+            class="block w-full mt-4 bg-accent text-primary px-4 py-2 rounded hover:bg-opacity-80 transition font-semibold text-center"
+          >
+            Login to Purchase
+          </a>
+          <% } %>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <div class="text-center mt-12">
+      <a
+        href="/shop"
+        class="bg-secondary text-white px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition text-lg"
+      >
+        Shop All Products
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-primary mb-4">
+        Why Choose Lavender's Gloss?
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="text-center">
+        <div
+          class="bg-accent w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
+        >
+          <i class="fas fa-award text-primary text-3xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-primary mb-4">
+          Professional Expertise
+        </h3>
+        <p class="text-gray-600">
+          Years of experience in makeup artistry with certified professionals
+        </p>
+      </div>
+      <div class="text-center">
+        <div
+          class="bg-secondary w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
+        >
+          <i class="fas fa-heart text-white text-3xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-primary mb-4">
+          Personalized Service
+        </h3>
+        <p class="text-gray-600">
+          Customized makeup solutions based on your skin type and preferences
+        </p>
+      </div>
+      <div class="text-center">
+        <div
+          class="bg-primary w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
+        >
+          <i class="fas fa-star text-accent text-3xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-primary mb-4">
+          Premium Products
+        </h3>
+        <p class="text-gray-600">
+          Only the finest makeup products and tools for exceptional results
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function addToCart(productId) {
+    fetch("/add-to-cart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        product_id: productId,
+        quantity: 1,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Product added to cart!");
+        }
+      });
+  }
+</script>
