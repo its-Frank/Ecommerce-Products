@@ -7,8 +7,9 @@
     </div>
     <h1 class="text-5xl font-bold text-white mb-4">Payment Successful!</h1>
     <p class="text-xl text-green-100">
-      Your <%= type === 'service' ? 'appointment has been booked' : 'order has
-      been placed' %> successfully
+      <% if (type === 'service') { %> Your appointment has been booked
+      successfully <% } else { %> Your order has been placed successfully <% }
+      %>
     </p>
   </div>
 </div>
@@ -19,7 +20,8 @@
       <div class="text-center mb-8">
         <h2 class="text-3xl font-bold text-primary mb-2">Receipt</h2>
         <p class="text-gray-600">
-          Transaction completed on <%= new Date().toLocaleDateString() %>
+          Transaction completed on <% var currentDate = new Date(); %><%=
+          currentDate.toLocaleDateString() %>
         </p>
       </div>
 
@@ -32,8 +34,11 @@
           <div class="text-right">
             <p class="text-sm text-gray-600">Receipt #</p>
             <p class="font-mono font-semibold">
-              <%= type === 'service' ? 'SRV-' + booking_id : 'ORD-' + order_id
-              %>
+              <% if (type === 'service') { %> <% if (typeof item !== 'undefined'
+              && item && item.id) { %> SRV-<%= item.id %> <% } else { %> SRV-N/A
+              <% } %> <% } else { %> <% if (typeof order_id !== 'undefined' &&
+              order_id) { %> ORD-<%= order_id %> <% } else { %> ORD-N/A <% } %>
+              <% } %>
             </p>
           </div>
         </div>
@@ -43,11 +48,17 @@
           <div class="space-y-3">
             <div class="flex justify-between">
               <span class="font-semibold">Service:</span>
-              <span>Makeup Appointment</span>
+              <span>
+                <% if (typeof item !== 'undefined' && item && item.service_name)
+                { %> <%= item.service_name %> <% } else { %> N/A <% } %>
+              </span>
             </div>
             <div class="flex justify-between">
               <span class="font-semibold">Booking ID:</span>
-              <span><%= booking_id %></span>
+              <span>
+                <% if (typeof item !== 'undefined' && item && item.id) { %> <%=
+                item.id %> <% } else { %> N/A <% } %>
+              </span>
             </div>
             <div class="flex justify-between">
               <span class="font-semibold">Status:</span>
@@ -58,22 +69,33 @@
           </div>
           <% } else { %>
           <div class="space-y-3">
-            <% items.forEach(item => { %>
+            <% if (typeof items !== 'undefined' && items && items.length > 0) {
+            %> <% for (var i = 0; i < items.length; i++) { %> <% var currentItem
+            = items[i]; %>
             <div class="flex justify-between">
-              <span><%= item.name %> (<%= item.quantity %>x)</span>
-              <span>KSH<%= (item.price * item.quantity).toFixed(2) %></span>
+              <span>
+                <% if (currentItem.name) { %> <%= currentItem.name %> <% } else
+                { %> Unknown Item <% } %> (<% if (currentItem.quantity) { %><%=
+                Number(currentItem.quantity) %><% } else { %>0<% } %>x)
+              </span>
+              <span>
+                KSH<% if (currentItem.price) { %><%=
+                Number(currentItem.price).toFixed(2) %><% } else { %>0.00<% } %>
+              </span>
             </div>
-            <% }); %>
+            <% } %> <% } else { %>
+            <div class="text-center text-gray-500">No items found</div>
+            <% } %>
           </div>
           <% } %>
         </div>
 
         <div class="flex justify-between text-xl font-bold text-primary">
           <span>Total Paid:</span>
-          <span
-            ><%= type === 'service' ? 'KSH' + booking_id : 'KSH' +
-            total.toFixed(2) %></span
-          >
+          <span>
+            KSH<% if (typeof total !== 'undefined' && total) { %><%=
+            Number(total).toFixed(2) %><% } else { %>0.00<% } %>
+          </span>
         </div>
 
         <div class="mt-8 p-4 bg-green-50 border border-green-200 rounded-lg">

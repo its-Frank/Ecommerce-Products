@@ -40,7 +40,7 @@ const upload = multer({
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "", // Make sure to replace with your actual MySQL password
+  password: "",
   database: "lavenders_gloss",
 });
 
@@ -60,93 +60,92 @@ app.use(
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Helper function to convert USD to KSH (approximate rate)
-const convertToKSH = (usdPrice) => {
-  return Math.round(usdPrice * 130); // 1 USD ≈ 130 KSH
-};
-
-// Helper function to get recommendations based on skin type
+// Helper function to get recommendations based on skin type (prices are now directly KSH)
 const getRecommendations = (skinType) => {
   const recommendations = {
     oily: [
       {
         name: "Oil-Free Foundation",
         description: "Matte finish foundation for oily skin",
-        price: 3900,
+        price: 3900.0,
       },
       {
         name: "Mattifying Primer",
         description: "Controls oil and shine all day",
-        price: 2600,
+        price: 2600.0,
       },
       {
         name: "Clay Face Mask",
         description: "Deep cleansing clay mask",
-        price: 1950,
+        price: 1950.0,
       },
     ],
     dry: [
       {
         name: "Hydrating Foundation",
         description: "Moisturizing foundation for dry skin",
-        price: 4550,
+        price: 4550.0,
       },
       {
         name: "Hydrating Primer",
         description: "Adds moisture and smooths skin",
-        price: 2925,
+        price: 2925.0,
       },
       {
         name: "Moisturizing Face Mask",
         description: "Intensive hydration mask",
-        price: 2275,
+        price: 2275.0,
       },
     ],
     combination: [
       {
         name: "Balancing Foundation",
         description: "Perfect for combination skin",
-        price: 4225,
+        price: 4225.0,
       },
       {
         name: "Dual-Zone Primer",
         description: "Controls oil in T-zone, hydrates cheeks",
-        price: 2795,
+        price: 2795.0,
       },
-      { name: "Balancing Toner", description: "Balances skin pH", price: 1625 },
+      {
+        name: "Balancing Toner",
+        description: "Balances skin pH",
+        price: 1625.0,
+      },
     ],
     sensitive: [
       {
         name: "Gentle Foundation",
         description: "Hypoallergenic formula for sensitive skin",
-        price: 4875,
+        price: 4875.0,
       },
       {
         name: "Soothing Primer",
         description: "Calms and protects sensitive skin",
-        price: 3250,
+        price: 3250.0,
       },
       {
         name: "Gentle Cleanser",
         description: "Mild, fragrance-free cleanser",
-        price: 1950,
+        price: 1950.0,
       },
     ],
     normal: [
       {
         name: "All-Day Foundation",
         description: "Perfect coverage for normal skin",
-        price: 3900,
+        price: 3900.0,
       },
       {
         name: "Smoothing Primer",
         description: "Creates perfect base",
-        price: 2600,
+        price: 2600.0,
       },
       {
         name: "Vitamin C Serum",
         description: "Brightens and protects",
-        price: 3250,
+        price: 3250.0,
       },
     ],
   };
@@ -175,10 +174,10 @@ app.get("/", (req, res) => {
     "SELECT * FROM products WHERE stock > 0 ORDER BY created_at DESC LIMIT 6",
     (err, products) => {
       if (err) throw err;
-      // Convert prices to KSH
+      // Prices are now directly KSH from DB, ensure they are numbers
       products = products.map((product) => ({
         ...product,
-        price_ksh: convertToKSH(product.price),
+        price_ksh: Number.parseFloat(product.price), // Convert to float
       }));
       renderWithLayout(res, "index", {
         products,
@@ -194,25 +193,25 @@ app.get("/services", (req, res) => {
     {
       id: 1,
       name: "Bridal Makeup",
-      price: 15000,
+      price: 15000.0,
       description: "Perfect for your special day",
     },
     {
       id: 2,
       name: "Soft Glam Makeup",
-      price: 8000,
+      price: 8000.0,
       description: "Natural and elegant look",
     },
     {
       id: 3,
       name: "Creative Makeup",
-      price: 12000,
+      price: 12000.0,
       description: "Artistic and unique designs",
     },
     {
       id: 4,
       name: "SFX Makeup",
-      price: 20000,
+      price: 20000.0,
       description: "Special effects and transformations",
     },
   ];
@@ -228,7 +227,7 @@ app.get("/services/bridal-makeup", (req, res) => {
   const service = {
     id: 1,
     name: "Bridal Makeup",
-    price: 15000,
+    price: 15000.0,
     description: "Perfect for your special day",
     duration: "3-4 hours",
   };
@@ -243,7 +242,7 @@ app.get("/services/soft-glam", (req, res) => {
   const service = {
     id: 2,
     name: "Soft Glam Makeup",
-    price: 8000,
+    price: 8000.0,
     description: "Natural and elegant look",
     duration: "2-3 hours",
   };
@@ -258,7 +257,7 @@ app.get("/services/creative-makeup", (req, res) => {
   const service = {
     id: 3,
     name: "Creative Makeup",
-    price: 12000,
+    price: 12000.0,
     description: "Artistic and unique designs",
     duration: "2-3 hours",
   };
@@ -273,7 +272,7 @@ app.get("/services/sfx-makeup", (req, res) => {
   const service = {
     id: 4,
     name: "SFX Makeup",
-    price: 20000,
+    price: 20000.0,
     description: "Special effects and transformations",
     duration: "4-5 hours",
   };
@@ -303,10 +302,10 @@ app.get("/shop", (req, res) => {
     "SELECT * FROM products WHERE stock > 0 ORDER BY created_at DESC",
     (err, products) => {
       if (err) throw err;
-      // Convert prices to KSH
+      // Prices are now directly KSH from DB, ensure they are numbers
       products = products.map((product) => ({
         ...product,
-        price_ksh: convertToKSH(product.price),
+        price_ksh: Number.parseFloat(product.price), // Convert to float
       }));
       renderWithLayout(res, "shop", {
         products,
@@ -332,13 +331,13 @@ app.get("/cart", (req, res) => {
     [req.session.user.id],
     (err, cartItems) => {
       if (err) throw err;
-      // Convert prices to KSH
+      // Prices are now directly KSH from DB, ensure they are numbers
       cartItems = cartItems.map((item) => ({
         ...item,
-        price_ksh: convertToKSH(item.price),
+        price_ksh: Number.parseFloat(item.price), // Convert to float
       }));
       const total = cartItems.reduce(
-        (sum, item) => sum + item.price_ksh * item.quantity,
+        (sum, item) => sum + item.price * item.quantity,
         0
       );
       renderWithLayout(res, "cart", {
@@ -357,10 +356,10 @@ app.get("/book/:serviceId", (req, res) => {
   }
 
   const services = {
-    1: { name: "Bridal Makeup", price: 15000 },
-    2: { name: "Soft Glam Makeup", price: 8000 },
-    3: { name: "Creative Makeup", price: 12000 },
-    4: { name: "SFX Makeup", price: 20000 },
+    1: { name: "Bridal Makeup", price: 15000.0 },
+    2: { name: "Soft Glam Makeup", price: 8000.0 },
+    3: { name: "Creative Makeup", price: 12000.0 },
+    4: { name: "SFX Makeup", price: 20000.0 },
   };
 
   const service = services[req.params.serviceId];
@@ -432,20 +431,20 @@ app.get("/admin", (req, res) => {
     (err, bookings) => {
       if (err) throw err;
 
-      // Convert booking prices to KSH
+      // Prices are now directly KSH from DB, ensure they are numbers
       bookings = bookings.map((booking) => ({
         ...booking,
-        service_price_ksh: convertToKSH(booking.service_price),
+        service_price_ksh: Number.parseFloat(booking.service_price), // Convert to float
       }));
 
       db.query(
         "SELECT * FROM products ORDER BY created_at DESC",
         (err2, products) => {
           if (err2) throw err2;
-          // Convert prices to KSH for display
+          // Prices are now directly KSH from DB, ensure they are numbers
           products = products.map((product) => ({
             ...product,
-            price_ksh: convertToKSH(product.price),
+            price_ksh: Number.parseFloat(product.price), // Convert to float
           }));
 
           db.query(
@@ -458,10 +457,10 @@ app.get("/admin", (req, res) => {
             (err3, orders) => {
               if (err3) throw err3;
 
-              // Convert order amounts to KSH
+              // Prices are now directly KSH from DB, ensure they are numbers
               orders = orders.map((order) => ({
                 ...order,
-                total_amount_ksh: convertToKSH(order.total_amount),
+                total_amount_ksh: Number.parseFloat(order.total_amount), // Convert to float
               }));
 
               renderWithLayout(res, "admin", {
@@ -597,9 +596,11 @@ app.get("/payment/service/:bookingId", (req, res) => {
       if (bookings.length === 0) {
         return res.redirect("/");
       }
+      const booking = bookings[0];
+      booking.service_price = Number.parseFloat(booking.service_price); // Ensure price is float
       renderWithLayout(res, "payment", {
         type: "service",
-        item: bookings[0],
+        item: booking,
         user: req.session.user,
         title: "Payment - Lavender's Gloss",
       });
@@ -618,13 +619,14 @@ app.get("/payment/cart", (req, res) => {
     [req.session.user.id],
     (err, cartItems) => {
       if (err) throw err;
-      // Convert prices to KSH
+      // Prices are now directly KSH, ensure they are numbers
       cartItems = cartItems.map((item) => ({
         ...item,
-        price_ksh: convertToKSH(item.price),
+        price: Number.parseFloat(item.price), // Convert price to float
+        quantity: Number(item.quantity), // Ensure quantity is a number
       }));
       const total = cartItems.reduce(
-        (sum, item) => sum + item.price_ksh * item.quantity,
+        (sum, item) => sum + item.price * item.quantity,
         0
       );
       renderWithLayout(res, "payment", {
@@ -639,16 +641,56 @@ app.get("/payment/cart", (req, res) => {
 });
 
 app.post("/process-payment", (req, res) => {
+  // Check if user is logged in
+  if (!req.session.user || !req.session.user.id) {
+    return res.redirect("/login");
+  }
+
   const { type, booking_id, phone } = req.body;
 
   if (type === "service") {
+    // Validate booking_id
+    if (!booking_id) {
+      return res.redirect("/");
+    }
     db.query(
-      'UPDATE bookings SET payment_status = "paid" WHERE id = ?',
-      [booking_id],
+      'UPDATE bookings SET payment_status = "paid" WHERE id = ? AND user_id = ?',
+      [booking_id, req.session.user.id],
       (err) => {
-        if (err) throw err;
-        // Redirect to recommendations after payment
-        res.redirect("/recommendations/" + booking_id);
+        if (err) {
+          console.error("Error updating booking payment status:", err);
+          return res.status(500).send("Error processing payment.");
+        }
+        // Fetch the booking details to pass to the receipt page
+        db.query(
+          "SELECT * FROM bookings WHERE id = ? AND user_id = ?",
+          [booking_id, req.session.user.id],
+          (err, bookings) => {
+            if (err) {
+              console.error("Error fetching booking:", err);
+              return res.status(500).send("Error fetching booking.");
+            }
+            if (bookings.length === 0) {
+              return res.redirect("/");
+            }
+            const booking = bookings[0];
+            booking.service_price = Number.parseFloat(
+              booking.service_price || 0
+            ); // Ensure price is float
+            // console.log("Service receipt data:", {
+            //   type: "service",
+            //   item: booking,
+            //   total: booking.service_price,
+            // });
+            renderWithLayout(res, "receipt", {
+              type: "service",
+              item: booking,
+              total: booking.service_price,
+              user: req.session.user,
+              title: "Receipt - Lavender's Gloss",
+            });
+          }
+        );
       }
     );
   } else {
@@ -662,15 +704,18 @@ app.post("/process-payment", (req, res) => {
     `,
       [req.session.user.id],
       (err, cartItems) => {
-        if (err) throw err;
-
-        // Convert to KSH
+        if (err) {
+          console.error("Error fetching cart items:", err);
+          return res.status(500).send("Error fetching cart items.");
+        }
+        // Prices are now directly KSH, ensure they are numbers
         cartItems = cartItems.map((item) => ({
           ...item,
-          price_ksh: convertToKSH(item.price),
+          price: Number.parseFloat(item.price || 0), // Convert to float with fallback
+          quantity: Number(item.quantity || 0), // Ensure quantity is a number
         }));
         const total = cartItems.reduce(
-          (sum, item) => sum + item.price_ksh * item.quantity,
+          (sum, item) => sum + item.price * item.quantity,
           0
         );
 
@@ -679,21 +724,36 @@ app.post("/process-payment", (req, res) => {
           "INSERT INTO orders (user_id, total_amount, items) VALUES (?, ?, ?)",
           [req.session.user.id, total, JSON.stringify(cartItems)],
           (err, result) => {
-            if (err) throw err;
+            if (err) {
+              console.error("Error creating order:", err);
+              return res.status(500).send("Error creating order.");
+            }
 
             // Update stock and clear cart
             cartItems.forEach((item) => {
-              db.query("UPDATE products SET stock = stock - ? WHERE id = ?", [
-                item.quantity,
-                item.product_id,
-              ]);
+              db.query(
+                "UPDATE products SET stock = stock - ? WHERE id = ?",
+                [item.quantity, item.product_id],
+                (err) => {
+                  if (err) console.error("Error updating product stock:", err);
+                }
+              );
             });
 
             db.query(
               "DELETE FROM cart WHERE user_id = ?",
               [req.session.user.id],
               (err) => {
-                if (err) throw err;
+                if (err) {
+                  console.error("Error clearing cart:", err);
+                  return res.status(500).send("Error clearing cart.");
+                }
+                console.log("Cart receipt data:", {
+                  type: "cart",
+                  order_id: result.insertId,
+                  items: cartItems,
+                  total,
+                });
                 renderWithLayout(res, "receipt", {
                   type: "cart",
                   order_id: result.insertId,
@@ -757,7 +817,7 @@ app.post("/admin/reject-booking/:id", (req, res) => {
   );
 });
 
-// Add product with image upload
+// Add product with image upload (price is now KSH directly)
 app.post("/admin/add-product", upload.single("image"), (req, res) => {
   const { name, price, description, stock } = req.body;
   const imagePath = req.file
@@ -824,7 +884,7 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
